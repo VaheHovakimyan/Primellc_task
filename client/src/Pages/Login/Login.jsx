@@ -1,11 +1,27 @@
+import { useEffect, useState } from 'react';
 import './Login.scss';
 
 
 
 export default function Login() {
+
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+
+        fetch("/account/data")
+            .then((res) => res.json())
+            .then((data) => {
+                setText(data);
+            })
+
+    }, [])
+
     return (
         <div className='login_main_div'>
-            
+
+            <h1>{text}</h1>
+
             <h1 className='login_title'>Login</h1>
 
             <div className='login_form_div'>

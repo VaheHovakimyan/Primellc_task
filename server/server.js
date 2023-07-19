@@ -5,7 +5,7 @@ const app = express();
 
 console.log("hello");
 
-app.get("/account", (req, res) => {
+app.get("/account/data", (req, res) => {
     res.send("OK")
 })
 
