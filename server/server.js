@@ -9,7 +9,7 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
 
 (async function () {
 
-    // await client.connect();
+    await client.connect();
 
     const app = express();
 
@@ -17,28 +17,64 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
 
     app.use(express.json());
 
-    try {
-        await client.connect();
-        console.log("Mongo is connected");
-    } catch (e) {
-        console.log(e);
+    const cleanup = (event) => {
+        client.close();
+        process.exit();
     }
 
+    process.on("SIGINT", cleanup);
+    process.on("SIGTERM", cleanup);
 
 
     // Add data in db
 
-    app.post("/register/user/data", (req, res) => {
-        console.log("That is work!");
+    const Usersdb = client.db("Users");
+
+    app.post("/register/user/data", async (req, res) => {
+
+        const UsersCollection = Usersdb.collection('Users')
+
+        try {
+            await UsersCollection.insertOne(req.body);
+        } catch (error) {
+            console.error(error);
+        }
+
         res.send("User is added!");
+    });
+
+
+    // Checking and sending data for login page
+
+    app.post("/login/user/data", async (req, res) => {
+
+        // const UsersCollection = Usersdb.collection('Users');
+
+        console.log(req.body);
+        // try {
+        //     // await UsersCollection.insertOne(req.body);`
+        // } catch (error) {
+        //     console.error(error);
+        // }
+
+        res.send("User send data!");
     });
 
 
     // Sending data for user
 
-    app.get("/account/elems/data", (req, res) => {
-        console.log("Good");
-        res.send("Data examples");
+    const Accountdb = client.db("AccountPage");
+
+    app.get("/account/elems/data", async (req, res) => {
+
+        const AccountCollection = Accountdb.collection('AccountElems');
+        try {
+            const AccountCollectionInfo = await AccountCollection.find({}).toArray();
+            res.send(AccountCollectionInfo);
+        } catch (error) {
+            console.error(error);
+        }
+
     })
 
     //////////////////
@@ -48,7 +84,6 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
         // console.log(filePath);
         response.sendFile(filePath);
     });
-
 
 
     app.listen(5000, () => {
