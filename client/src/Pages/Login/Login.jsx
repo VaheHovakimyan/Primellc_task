@@ -5,17 +5,23 @@ import './Login.scss';
 
 export default function Login() {
 
+    const [loginHidden, setLoginHidden] = useState(false);
+
     const [text, setText] = useState("");
 
-    useEffect(() => {
+    const onChangeLoginHidden = () => {
+        setLoginHidden(!loginHidden);
+    }
 
-        fetch("/account/data")
-            .then((res) => res.json())
-            .then((data) => {
-                setText(data);
-            })
+    // useEffect(() => {
 
-    }, [])
+    //     fetch("/account/data")
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             setText(data);
+    //         })
+
+    // }, [])
 
     return (
         <div className='login_main_div'>
@@ -35,8 +41,20 @@ export default function Login() {
 
 
                     <div className='input_div'>
-                        <input type="text" name='password' placeholder='Password' className='login_input' />
-                        <span className='focus-border'></span>
+                        <div className='pass_and_icon'>
+                            <input type={loginHidden ? "password" : "text"} name='password' placeholder='Password' className='login_input_pass' />
+
+                            <div onClick={onChangeLoginHidden} className='eye_icon'>
+                                {
+                                    loginHidden ?
+                                        <i class="fa fa-eye fa-2x" aria-hidden="true"></i> :
+                                        <i class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
+                                }
+
+                            </div>
+                            
+                            <span className='focus-border'></span>
+                        </div>
                     </div>
 
 
