@@ -1,16 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './Login.scss';
 
 
 
-export default function Login() {
+export default function Login({ setAccountUsername }) {
 
     const navigate = useNavigate();
 
     const [loginHidden, setLoginHidden] = useState(true);
 
-    const [navBool, setNavBool] = useState();
+    // const [accountUsername, setAccountUsername] = useState("User");
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -28,12 +28,14 @@ export default function Login() {
     // Send message function
 
     async function SendMessage(evt) {
+
         await evt.preventDefault();
 
         const data = {
             username: username,
             password: password
         }
+
 
         if (username && password) {
 
@@ -44,47 +46,35 @@ export default function Login() {
                 },
                 body: JSON.stringify(data)
             })
-
-
-            await fetch("/login/user/navigate/data")
                 .then((stream) => stream.json())
                 .then((data) => {
-                    console.log("data", data);
-                    setNavBool(data);
+
+                    setAccountUsername(data.username);
+
+                    if (data.bool) {
+                        navigate("/account");
+                    }
+
                 })
 
-            console.log(navBool);
-
-            // navigate("/account");
 
             setUsername("");
             setPassword("");
-
 
         }
 
     }
 
 
-    // useEffect(() => {
-    //     fetch("/login/user/navigate/data")
-    //         .then((stream) => stream.json())
-    //         .then((data) => {
-    //             console.log("data", data);
-    //             setNavBool(data);
-    //         })
-
-    //     console.log(navBool);
-
-    //     // navigate("/account");
-    // }, []);
-
-
-
 
 
     return (
         <div className='login_main_div'>
+
+            <div className='reg_link'> 
+                <Link to="/register"><button className='to_page_button'>To Register</button></Link>
+            </div>
+
 
             <h1 className='login_title'>Login</h1>
 

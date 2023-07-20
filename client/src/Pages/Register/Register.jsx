@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './Register.scss';
 
 
@@ -67,7 +67,7 @@ export default function Register() {
             // if (isAdmin) {
             //     navigate("/admin");
             // } else {
-                navigate("/login");
+            navigate("/login");
             // }
 
         }
@@ -78,6 +78,11 @@ export default function Register() {
     return (
 
         <div className='register_main_div'>
+
+            <div className='links_in_register'>
+                <Link to="/"><button className='to_page_button'>To Main</button></Link>
+                <Link to="/login"><button className='to_page_button'>To Login</button></Link>
+            </div>
 
             <h1 className='register_title'>Register</h1>
 

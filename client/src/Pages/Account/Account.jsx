@@ -3,7 +3,7 @@ import './Account.scss';
 
 
 
-export default function Account() {
+export default function Account({accountUsername}) {
 
     const [accountData, setAccountData] = useState([]);
 
@@ -19,7 +19,7 @@ export default function Account() {
     return (
         <div className='account_main_div'>
 
-            <h1 className='account_welcome_title'>Hello, dear user NamNamNam</h1>
+            <h1 className='account_welcome_title'>Hello, dear user {accountUsername}</h1>
 
             <div className='user_account_elements'>
                 {accountData.map((item) => {

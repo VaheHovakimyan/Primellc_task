@@ -22,6 +22,7 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
         process.exit();
     }
 
+
     process.on("SIGINT", cleanup);
     process.on("SIGTERM", cleanup);
 
@@ -74,7 +75,8 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
         const UsersCollection = Usersdb.collection('Users');
 
         let isAdmin = {
-            bool: false
+            bool: false,
+            username: req.body.username
         }
 
 
@@ -87,7 +89,8 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
             if (UsersCollectionInfo.length !== 0) {
                 if (UsersCollectionInfo[0].password === req.body.password) {
                     isAdmin = {
-                        bool: true
+                        bool: true,
+                        username: req.body.username
                     }
                 }
             } else {
@@ -103,16 +106,16 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
     });
 
 
-    app.get("/login/user/navigate/data", async (req, res) => {
+    // app.get("/login/user/navigate/data", async (req, res) => {
 
-        try {
-           return res.send(isAdmin);
-        } catch (error) {
-            console.error(error);
-        }
+    //     try {
+    //        return res.send(isAdmin);
+    //     } catch (error) { 
+    //         console.error(error);
+    //     }
 
-        res.send(isAdmin);
-    });
+    //     res.send(isAdmin);
+    // });
 
 
     // Sending data for user
@@ -140,8 +143,8 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
     });
 
 
-    app.listen(5005, () => {
-        console.log(`Server started in 5005 port`);
+    app.listen(5000, () => {
+        console.log(`Server started in 5000 port`);
     })
 
 })()

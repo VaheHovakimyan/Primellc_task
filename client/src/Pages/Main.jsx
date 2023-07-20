@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Register from "./Register/Register";
 import Login from "./Login/Login";
@@ -7,6 +8,9 @@ import Account from "./Account/Account";
 
 
 export default function Main() {
+
+    const [accountUsername, setAccountUsername] = useState("User");
+
     return (
         <div>
             <Routes>
@@ -17,10 +21,14 @@ export default function Main() {
                     <Register />
                 } />
                 <Route path="/login" element={
-                    <Login />
+                    <Login
+                    setAccountUsername={setAccountUsername}
+                    />
                 } />
                 <Route path="/account" element={
-                    <Account />
+                    <Account
+                        accountUsername={accountUsername}
+                    />
                 } />
                 <Route path="*" element={
                     <NotFound />
