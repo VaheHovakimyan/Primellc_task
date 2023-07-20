@@ -32,32 +32,86 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
 
     app.post("/register/user/data", async (req, res) => {
 
-        const UsersCollection = Usersdb.collection('Users')
+        let responseBool = {
+            regbool: false
+        }
+
+        const UsersCollection = Usersdb.collection('Users');
+
 
         try {
-            await UsersCollection.insertOne(req.body);
+
+            const checkBool = await UsersCollection.find({ "username": req.body.username }).toArray();
+
+            if (checkBool.length === 0) {
+
+                responseBool = {
+                    regbool: true
+                }
+
+                await UsersCollection.insertOne(req.body);
+
+            } else {
+                return res.send(responseBool);
+            }
+
         } catch (error) {
             console.error(error);
         }
 
-        res.send("User is added!");
+        res.send(responseBool);
     });
 
 
     // Checking and sending data for login page
 
+    // let isAdmin = {
+    //     bool: false
+    // }
+
     app.post("/login/user/data", async (req, res) => {
 
-        // const UsersCollection = Usersdb.collection('Users');
+        const UsersCollection = Usersdb.collection('Users');
 
-        console.log(req.body);
-        // try {
-        //     // await UsersCollection.insertOne(req.body);`
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        let isAdmin = {
+            bool: false
+        }
 
-        res.send("User send data!");
+
+        try {
+
+            const UsersCollectionInfo = await UsersCollection.find({ "username": req.body.username }).toArray();
+
+            console.log(UsersCollectionInfo.length !== 0);
+
+            if (UsersCollectionInfo.length !== 0) {
+                if (UsersCollectionInfo[0].password === req.body.password) {
+                    isAdmin = {
+                        bool: true
+                    }
+                }
+            } else {
+                return res.send(isAdmin);
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+
+        res.send(isAdmin);
+
+    });
+
+
+    app.get("/login/user/navigate/data", async (req, res) => {
+
+        try {
+           return res.send(isAdmin);
+        } catch (error) {
+            console.error(error);
+        }
+
+        res.send(isAdmin);
     });
 
 
@@ -86,8 +140,8 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
     });
 
 
-    app.listen(5000, () => {
-        console.log(`Server started in 5000 port`);
+    app.listen(5005, () => {
+        console.log(`Server started in 5005 port`);
     })
 
 })()

@@ -10,6 +10,8 @@ export default function Login() {
 
     const [loginHidden, setLoginHidden] = useState(true);
 
+    const [navBool, setNavBool] = useState();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -43,14 +45,42 @@ export default function Login() {
                 body: JSON.stringify(data)
             })
 
+
+            await fetch("/login/user/navigate/data")
+                .then((stream) => stream.json())
+                .then((data) => {
+                    console.log("data", data);
+                    setNavBool(data);
+                })
+
+            console.log(navBool);
+
+            // navigate("/account");
+
             setUsername("");
             setPassword("");
 
-            navigate("/account");
 
         }
 
     }
+
+
+    // useEffect(() => {
+    //     fetch("/login/user/navigate/data")
+    //         .then((stream) => stream.json())
+    //         .then((data) => {
+    //             console.log("data", data);
+    //             setNavBool(data);
+    //         })
+
+    //     console.log(navBool);
+
+    //     // navigate("/account");
+    // }, []);
+
+
+
 
 
     return (
