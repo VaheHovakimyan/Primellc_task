@@ -4,12 +4,13 @@
   "description": "Task",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon --require dotenv/config server.js"
   },
   "author": "Vahe Hovakimyan",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "dotenv": "^16.3.1",
     "nodemon": "^3.0.1"
   },
   "dependencies": {

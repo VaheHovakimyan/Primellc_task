@@ -51,15 +51,17 @@ export default function Login({ setAccountUsername }) {
 
                     setAccountUsername(data.username);
 
-                    if (data.bool) {
+                    if (data.bool === false) {
+                        alert("Wrong username or password.");
+                    } else {
+                        setUsername("");
+                        setPassword("");
                         navigate("/account");
                     }
 
+
+
                 })
-
-
-            setUsername("");
-            setPassword("");
 
         }
 
@@ -71,7 +73,7 @@ export default function Login({ setAccountUsername }) {
     return (
         <div className='login_main_div'>
 
-            <div className='reg_link'> 
+            <div className='reg_link'>
                 <Link to="/register"><button className='to_page_button'>To Register</button></Link>
             </div>
 

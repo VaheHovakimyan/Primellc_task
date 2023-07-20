@@ -4,7 +4,7 @@ import { MongoClient, ObjectId } from "mongodb";
 
 
 
-const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@clustertask.uq6oxrq.mongodb.net/?retryWrites=true&w=majority ');
+const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@clustertask.uq6oxrq.mongodb.net/?retryWrites=true&w=majority');
 
 
 (async function () {
@@ -66,9 +66,6 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
 
     // Checking and sending data for login page
 
-    // let isAdmin = {
-    //     bool: false
-    // }
 
     app.post("/login/user/data", async (req, res) => {
 
@@ -106,17 +103,6 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
     });
 
 
-    // app.get("/login/user/navigate/data", async (req, res) => {
-
-    //     try {
-    //        return res.send(isAdmin);
-    //     } catch (error) { 
-    //         console.error(error);
-    //     }
-
-    //     res.send(isAdmin);
-    // });
-
 
     // Sending data for user
 
@@ -138,12 +124,11 @@ const client = new MongoClient('mongodb+srv://vahehovakimyan19:Fal1x8HoZ90ntk39@
 
     app.get('*', function (request, response) {
         const filePath = path.resolve("../client/build/index.html");
-        // console.log(filePath);
         response.sendFile(filePath);
     });
 
 
-    app.listen(5000, () => {
+    app.listen(process.env.APP_PORT, () => {
         console.log(`Server started in 5000 port`);
     })
 

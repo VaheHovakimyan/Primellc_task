@@ -58,16 +58,30 @@ export default function Register() {
                 },
                 body: JSON.stringify(data)
             })
+                .then((stream) => stream.json())
+                .then((data) => {
 
-            setUsername("");
-            setEmail("");
-            setPassword("");
-            setRepPassword("");
+                    if (data.regbool === false) {
+                        alert("There is already a registered user with that name.");
+                    }else{
+                        setUsername("");
+                        setEmail("");
+                        setPassword("");
+                        setRepPassword("");
+                        navigate("/login");
+                    }
+                    // if (data.bool) {
+                    //     navigate("/account");
+                    // }
+
+                });
+
+           
 
             // if (isAdmin) {
             //     navigate("/admin");
             // } else {
-            navigate("/login");
+         
             // }
 
         }
